@@ -1,0 +1,24 @@
+{% extends 'service/base.html' %}
+  {% block content %}
+ {% for  object in object_list %}
+
+<div class="col-4">
+    <div class="card mb-4 box-shadow">
+
+        <div class="card-body">
+
+            <h3 class="card-title pricing-card-title">{{ object.newsletter_name|title }}</h3>
+            <h4 class="card-title pricing-card-title">{{ object.newsletter_body|truncatechars:100 }}</h4>
+            <h4 class="card-title pricing-card-title">{{ object.newsletter_settings|truncatechars:100 }}</h4>
+            <ul class="list-unstyled mt-5 mb-5 text-start m-5">
+                <li></li>
+            </ul>
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <a href="{% url 'service:newsletter' object.pk %}" type="button" class="btn btn-secondary">Перейти</a>
+                <a href="{% url 'service:newsletter_update' object.pk %}" type="button" class="btn btn-secondary">Изменить</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}

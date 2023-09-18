@@ -1,0 +1,16 @@
+{% extends 'service/base.html' %}
+{% block content %}
+<div class="col-6">
+    <div class="card mb-6 box-shadow">
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            <p>Хотите удалить {{ object.title }}</p>
+            <button type="submit" class="btn btn-secondary">Подтвердить</button>
+            <a href="{% url 'client:client_all'  %}" type="button" class="btn btn-secondary">Отмена</a>
+          </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
