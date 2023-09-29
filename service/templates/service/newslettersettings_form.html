@@ -5,8 +5,7 @@
         <div class="col-6">
             <div class="card">
                 <div class="card-body">
-                    <p>Заполните поля для настройки рассылки</p>
-                    <form method="post">
+                    <form method="post" action="{% url 'service:newslettersettings_list' %}">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-success">

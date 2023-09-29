@@ -2,20 +2,44 @@
   {% block content %}
  {% for  object in object_list %}
 
-<div class="col-4">
+<div class="col-6">
     <div class="card mb-4 box-shadow">
 
         <div class="card-body">
 
             <h3 class="card-title pricing-card-title">{{ object.newsletter_name|title }}</h3>
             <h4 class="card-title pricing-card-title">{{ object.newsletter_body|truncatechars:100 }}</h4>
-            <h4 class="card-title pricing-card-title">{{ object.newsletter_settings|truncatechars:100 }}</h4>
+            <h4 class="card-title pricing-card-title">
+                {% if object.newsletter_settings %}
+                    {{ object.newsletter_settings|truncatechars:100 }}
+                {% else %}
+                    Настройки рассылки не созданы и/или удалены
+                {% endif %}
+            </h4>
             <ul class="list-unstyled mt-5 mb-5 text-start m-5">
                 <li></li>
             </ul>
             <div class="btn-group" role="group" aria-label="Basic outlined example">
                 <a href="{% url 'service:newsletter' object.pk %}" type="button" class="btn btn-secondary">Перейти</a>
-                <a href="{% url 'service:newsletter_update' object.pk %}" type="button" class="btn btn-secondary">Изменить</a>
+                <a href="{% url 'service:newsletter_update' object.pk %}" type="button" class="btn btn-secondary">Изменить сообщение</a>
+                {% if object.newsletter_settings %}
+                     <a href="{% url 'service:newslettersettings_update' object.newsletter_settings.pk %}" type="button" class="btn btn-secondary">Изменить настройки</a>
+                {% else %}
+                    <a class="btn btn-secondary">
+                        <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true">
+                             {{ object.newsletter_settings.status|default_if_none:" " }}</button>
+                    </a>
+                {% endif %}
+                <a class="btn btn-secondary">
+<!--                    {% if object.newsletter_settings.status is None %}-->
+<!--                          <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true"></button>-->
+<!--                    {% elif  object.newsletter_settings.status == 'Завершена' %}-->
+<!--                          <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true">Запустить </button>-->
+<!--                    {% else %}-->
+                         <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true">
+                             {{ object.newsletter_settings.status|default_if_none:" " }}</button>
+<!--                    {% endif %}-->
+                </a>
             </div>
         </div>
     </div>

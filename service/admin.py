@@ -7,16 +7,16 @@ from service.models import NewsletterSettings, NewsletterMessage, LogsNewsletter
 class NewsletterSettingsAdmin(admin.ModelAdmin):
     """Админка для работы с настройками рассылки"""
 
-    list_display = ('pk', 'newsletter_time_start', 'newsletter_time_finish', 'frequency',
-                    'status', 'to_email', )
+    list_display = ('pk', 'newsletter_month_start', 'newsletter_month_finish', 'frequency',
+                    'status', )
     search_fields = ('status',)
-    ordering = ('to_email',)
+
 
 
 @admin.register(NewsletterMessage)
 class NewsletterMessageAdmin(admin.ModelAdmin):
     """Админка для работы с телом рассылки"""
-    list_display = ('pk', 'newsletter_name', 'newsletter_body', 'newsletter_settings',)
+    list_display = ('pk', 'newsletter_name', 'newsletter_body',)
     search_fields = ('newsletter_name',)
     ordering = ('newsletter_settings',)
 

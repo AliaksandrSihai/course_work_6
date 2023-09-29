@@ -24,4 +24,5 @@ urlpatterns = [
     path('', MainInfoView.as_view(), name='main'),
     path('newsletter/', include('service.urls', namespace='newsletter')),
     path('client/', include('client.urls', namespace='clients')),
+    path('users/', include('users.urls', namespace='users')),
 ]

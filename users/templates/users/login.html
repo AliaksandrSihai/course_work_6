@@ -4,17 +4,17 @@
     <div class="row">
         <div class="col-6">
             <div class="card">
+              <div class="card-header">
+                <h4>
+                  Авторизация
+                </h4>
+              </div>
                 <div class="card-body">
-                    <p>Заполните поля для настройки рассылки</p>
                     <form method="post">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-success">
-                            {% if object %}
-                                Сохранить изменения
-                            {% else %}
-                                Создать
-                            {% endif %}
+                                Войти
                         </button>
                     </form>
                 </div>

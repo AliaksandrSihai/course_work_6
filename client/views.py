@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
+from client.forms import ClientForm
 from client.models import Client
 
 
@@ -10,7 +10,7 @@ class ClientCreateView(CreateView):
     """Создание нового клиента"""
 
     model = Client
-    fields = ['first_name', 'last_name', 'contact_email', 'feedback']
+    form_class = ClientForm
     success_url = reverse_lazy('client:client_all')
 
 
@@ -18,7 +18,7 @@ class ClientUpdateView(UpdateView):
     """Изменение/обновление уже созданного клиента"""
 
     model = Client
-    fields = ['first_name', 'last_name', 'contact_email', 'feedback']
+    form_class = ClientForm
     success_url = reverse_lazy('client:client_all')
 
 

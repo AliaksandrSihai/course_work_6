@@ -1,43 +1,57 @@
 {% extends 'service/base.html' %}
   {% block content %}
-<div class="container">
-    <div class="row text-start">
+    {% load tags %}
+            <div class="container">
+                <div class="row text-start">
+                          <div class="col-6">
+                            <div class="card mb-4 rounded-3 shadow-sm">
+                              <div class="card-header py-3">
+                                <h4 class="my-0 fw-normal">Рассылки( {{ object|count_newsletters }} )</h4>
+                              </div>
+                              <div class="card-body">
+                                <ul class="list-unstyled mt-5 mb-100">
+                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                        <a href = "{% url 'service:newsletter_all' %}" type="button" class="btn btn-secondary" >Просмотр рассылок</a>
+                                        <a href = "{% url 'service:newslettersettings_list' %}" type="button" class="btn btn-secondary" >Просмотр примеров настройки рассылок</a>
+                                        <a href = "{% url 'service:newslettersettings_create' %}" type="button" class="btn btn-secondary">Создать новую рассылку</a>
+                                    </div>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
 
-              <div class="col-6">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                  <div class="card-header py-3">
-                    <h4 class="my-0 fw-normal">Рассылки</h4>
-                  </div>
-                  <div class="card-body">
-                    <ul class="list-unstyled mt-5 mb-100">
-                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <a href = "{% url 'service:newsletter_all' %}" type="button" class="btn btn-secondary" >Просмотр рассылок</a>
-                            <a href = "{% url 'service:newsletter_create' %}" type="button" class="btn btn-secondary">Создать новую</a>
-                        </div>
-                    </ul>
-                  </div>
+                       <div class="col-6">
+                            <div class="card mb-4 rounded-3 shadow-sm">
+                              <div class="card-header py-3">
+                                <h4 class="my-0 fw-normal">Пользователи({{ object|client_all }})</h4>
+                              </div>
+                              <div class="card-body">
+                                <ul class="list-unstyled mt-5 mb-100">
+                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                        <a href = "{% url 'client:client_all' %}" type="button" class="btn btn-secondary">Просмотр пользователей</a>
+                                        <a href = "{% url 'client:client_create' %}" type="button" class="btn btn-secondary">Создать нового пользователя</a>
+                                    </div>
+                                </ul>
+                              </div>
+                            </div>
+                       </div>
+                     <div class="col-6">
+                            <div class="card mb-4 rounded-3 shadow-sm">
+                              <div class="card-header py-3">
+                                <h4 class="my-0 fw-normal">Настройки для рассылок({{ object|settings_all }})</h4>
+                              </div>
+                              <div class="card-body">
+                                <ul class="list-unstyled mt-5 mb-100">
+                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                        <a href = "{% url 'service:newslettersettings_list' %}" type="button" class="btn btn-secondary">Просмотр настроек</a>
+                                        <a href = "{% url 'service:newslettersettings_create' %}" type="button" class="btn btn-secondary">Создать новую настройку</a>
+                                    </div>
+                                </ul>
+                              </div>
+                            </div>
+                       </div>
                 </div>
-              </div>
-
-           <div class="col-6">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                  <div class="card-header py-3">
-                    <h4 class="my-0 fw-normal">Пользователи</h4>
-                  </div>
-                  <div class="card-body">
-                    <ul class="list-unstyled mt-5 mb-100">
-                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <a href = "{% url 'client:client_all' %}" type="button" class="btn btn-secondary">Просмотр пользователей</a>
-                            <a href = "{% url 'client:client_create' %}" type="button" class="btn btn-secondary">Создать нового пользователя</a>
-                        </div>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-
-    </div>
-</div>
+            </div>
 
 
 
