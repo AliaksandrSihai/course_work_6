@@ -7,7 +7,6 @@ app_name = ServiceConfig.name
 
 
 urlpatterns = [
-  path('register_user/', views.register_user, name='register_user'),
   path('newsletter_create/', views.NewsletterCreateView.as_view(), name='newsletter_create'),
   path('newsletter_update/<int:pk>', views.NewsletterUpdateView.as_view(), name='newsletter_update'),
   path('newsletter_delete/<int:pk>', views.NewsletterDeleteView.as_view(), name='newsletter_delete'),

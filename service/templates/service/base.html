@@ -97,13 +97,17 @@
                 <a class="nav-link " aria-current="page" href="{% url 'client:client_all' %}">Пользователи</a>
                 <a class="nav-link " aria-current="page" href="{% url 'service:newslettersettings_list' %}">Примеры настроек рассылок</a>
                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Войти
+                      <a class=" nav-link   dropdown-toggle "  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Меню пользователя
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Войти</a></li>
-                        <li><a class="dropdown-item" href="{% url 'service:register_user' %} ">Зарегистрироваться</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                          {% if user.is_authenticated %}
+                                <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
+                                <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
+                          {% else %}
+                                <li><a class="dropdown-item" href="{% url 'users:login' %}">Войти</a></li>
+                                <li><a class="dropdown-item" href="{% url 'users:register' %} ">Зарегистрироваться</a></li>
+                          {% endif %}
                       </ul>
         </li>
             </div>

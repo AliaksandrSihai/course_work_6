@@ -1,0 +1,28 @@
+{% extends 'service/base.html' %}
+{% block content %}
+<div class="col-12">
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                <h5> Профиль </h5>
+              </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success"> Сохранить </button>
+                    </form>
+                </div>
+                <div class="card_footer">
+                    <a href="{% url 'users:generate_new_password' %}" class="btn btn-warning"> Сбросить и сгенерировать норвый пароль </a>
+                    {% if user.is_verified %}
+                        <a href="{% url 'users:verify'  %}" class="btn btn-warning"> Верифицировать почтовый адрес </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
