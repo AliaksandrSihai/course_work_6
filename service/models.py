@@ -1,7 +1,9 @@
 from django.db import models
 
-import client.models
 import calendar
+
+import client.models
+
 # Create your models here.
 NULLABLE = {'null': True, 'blank': True}
 
@@ -14,23 +16,18 @@ class NewsletterSettings(models.Model):
         ('Раз в неделю', 'Раз в неделю'),
         ('Раз в месяц', 'Раз в месяц')
     ]
-    STATUS = [
-        ('Запущена', 'Запущена'),
-        ('Завершена', 'Завершена')
-    ]
-    MONTH = [(i, calendar.month_name[i]) for i in range(1, 13)]
 
-    newsletter_month_start = models.IntegerField(choices=MONTH, verbose_name='месяц начала')
-    newsletter_month_finish = models.IntegerField(choices=MONTH, verbose_name='месяц окончания')
+    newsletter_start = models.DateField(verbose_name='начало рассылки')
+    newsletter_finish = models.DateField(verbose_name='окончание рассылки')
     frequency = models.CharField(max_length=15, choices=FREQUENCY, verbose_name='периодичность')
-    status = models.CharField(max_length=10, choices=STATUS, verbose_name='статус рассылки', default='Создана',
+    status = models.CharField(max_length=10, verbose_name='статус рассылки', default='Создана',
                               **NULLABLE)
 
     def __str__(self):
-        return f'Время рассылки c {self.newsletter_month_start} месяца до ' \
-               f'{self.newsletter_month_finish} месяца,\n'\
-               f'Периодичность - {self.frequency},\n' \
-               f'Статус - {self.status}'
+        return f'Время рассылки c {self.newsletter_start}  до ' \
+               f'{self.newsletter_finish};\n'\
+               f'Периодичность - {self.frequency};\n'
+
 
     class Meta:
         verbose_name = 'настройки рассылки'
@@ -42,11 +39,12 @@ class NewsletterMessage(models.Model):
 
     newsletter_name = models.CharField(max_length=100, verbose_name='тема письма')
     newsletter_body = models.TextField(verbose_name='тело письма')
-    newsletter_settings = models.ManyToManyField(to=NewsletterSettings, verbose_name='настройки рассылки')
+    newsletter_settings = models.ForeignKey(NewsletterSettings, on_delete=models.CASCADE,
+                                            verbose_name='настройки рассылки')
     to_email = models.ManyToManyField(to=client.models.Client)
 
     def __str__(self):
-        return (f'Тема - {self.newsletter_name}\n Email - {self.to_email}\n '
+        return (f'Тема - {self.newsletter_name};\n '
                 f'Настройки рассылки:{self.newsletter_settings}')
 
     class Meta:
@@ -63,9 +61,8 @@ class LogsNewsletter(models.Model):
     newsletter_id = models.ForeignKey(NewsletterMessage, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'id рассылки - {self.newsletter_id}\n' \
-               f'статус попытки - {self.attempt_status}\n' \
-               f'ответ сервера - {self.server_response}'
+        return f'{self.newsletter_id}\n' \
+               f'Статус попытки - {self.attempt_status};\n'
 
     class Meta:
         verbose_name = 'логи'

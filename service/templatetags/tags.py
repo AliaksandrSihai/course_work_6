@@ -9,7 +9,6 @@ register = template.Library()
 def count_newsletters(object):
     models = NewsletterMessage.objects.all()
     model_active = []
-    model_all = models
     for model in models:
         info = model.newsletter_settings
         if info is None:

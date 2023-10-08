@@ -38,9 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'service',
     'client',
+    'service',
     'users',
+    'blog',
     'django_crontab',
 ]
 
@@ -145,7 +146,15 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 CRONJOBS = [
-    ('00 9 * * *', 'service.cron.scheduled_day', '>>/service/logs.log'),
-    ('00 9 1 * *', 'service.cron.scheduled_week', '>>/service/logs.log'),
-    ('00 9 0 0 *', 'service.cron.scheduled_month', '>>/service/logs.log'),
+    ('00 9 * * *', 'service.cron.newsletter')
 ]
+
+CACHE_ENABLED=True
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": "redis://127.0.0.1:6379/1",
+            "TIMEOUT": 300 # Ручная регулировка времени жизни кеша в секундах, по умолчанию 300
+        }
+    }

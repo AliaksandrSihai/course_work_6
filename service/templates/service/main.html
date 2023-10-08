@@ -13,7 +13,7 @@
                                     <div class="btn-group" role="group" aria-label="Basic outlined example">
                                         <a href = "{% url 'service:newsletter_all' %}" type="button" class="btn btn-secondary" >Просмотр рассылок</a>
                                         <a href = "{% url 'service:newslettersettings_list' %}" type="button" class="btn btn-secondary" >Просмотр примеров настройки рассылок</a>
-                                        <a href = "{% url 'service:newslettersettings_create' %}" type="button" class="btn btn-secondary">Создать новую рассылку</a>
+                                        <a href = "{% url 'service:newsletter_create' %}" type="button" class="btn btn-secondary">Создать новую рассылку</a>
                                     </div>
                                 </ul>
                               </div>
@@ -23,13 +23,19 @@
                        <div class="col-6">
                             <div class="card mb-4 rounded-3 shadow-sm">
                               <div class="card-header py-3">
-                                <h4 class="my-0 fw-normal">Пользователи({{ object|client_all }})</h4>
+                                <h4 class="my-0 fw-normal">Клиенты(
+                                    {% if user.is_authenticated %}
+                                        {{ object|client_all }}
+                                    {% else %}
+                                        Необходимо войти или зарегистрироваться для просмотра
+                                    {% endif %}
+                                    )</h4>
                               </div>
                               <div class="card-body">
                                 <ul class="list-unstyled mt-5 mb-100">
                                     <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                        <a href = "{% url 'client:client_all' %}" type="button" class="btn btn-secondary">Просмотр пользователей</a>
-                                        <a href = "{% url 'client:client_create' %}" type="button" class="btn btn-secondary">Создать нового пользователя</a>
+                                        <a href = "{% url 'client:client_all' %}" type="button" class="btn btn-secondary">Просмотр клиентов</a>
+                                        <a href = "{% url 'client:client_create' %}" type="button" class="btn btn-secondary">Создать нового клиента</a>
                                     </div>
                                 </ul>
                               </div>
@@ -50,6 +56,22 @@
                               </div>
                             </div>
                        </div>
+                    {% for _ in '123' %}
+                        <div class="col-6">
+                            <div class="card mb-4 rounded-3 shadow-sm">
+                              <div class="card-header py-3">
+                                <h4 class="my-0 fw-normal">Блог({{ blog.title }})</h4>
+                              </div>
+                              <div class="card-body">
+                                <ul class="list-unstyled mt-5 mb-100">
+                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                        <a href = "{% url 'blog:blog_create'  %}" type="button" class="btn btn-secondary">Перейти</a>
+                                    </div>
+                                </ul>
+                              </div>
+                            </div>
+                       </div>
+                    {% endfor%}
                 </div>
             </div>
 

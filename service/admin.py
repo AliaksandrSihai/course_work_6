@@ -7,7 +7,7 @@ from service.models import NewsletterSettings, NewsletterMessage, LogsNewsletter
 class NewsletterSettingsAdmin(admin.ModelAdmin):
     """Админка для работы с настройками рассылки"""
 
-    list_display = ('pk', 'newsletter_month_start', 'newsletter_month_finish', 'frequency',
+    list_display = ('pk', 'newsletter_start', 'newsletter_finish', 'frequency',
                     'status', )
     search_fields = ('status',)
 

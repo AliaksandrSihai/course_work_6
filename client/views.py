@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -6,7 +7,7 @@ from client.models import Client
 
 
 # Create your views here.
-class ClientCreateView(CreateView):
+class ClientCreateView(LoginRequiredMixin, CreateView):
     """Создание нового клиента"""
 
     model = Client
@@ -14,7 +15,7 @@ class ClientCreateView(CreateView):
     success_url = reverse_lazy('client:client_all')
 
 
-class ClientUpdateView(UpdateView):
+class ClientUpdateView(LoginRequiredMixin, UpdateView):
     """Изменение/обновление уже созданного клиента"""
 
     model = Client
@@ -22,7 +23,7 @@ class ClientUpdateView(UpdateView):
     success_url = reverse_lazy('client:client_all')
 
 
-class ClientDeleteView(DeleteView):
+class ClientDeleteView(LoginRequiredMixin, DeleteView):
     """Удаление клиента"""
 
     model = Client
@@ -36,7 +37,7 @@ class ClientListView(ListView):
         'title': "Созданные клиенты",
     }
 
-class ClientDetailView(DetailView):
+class ClientDetailView(LoginRequiredMixin, DetailView):
     """Просмотр одного клиента"""
 
     model = Client

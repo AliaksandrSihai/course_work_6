@@ -9,6 +9,7 @@
 
             <h3 class="card-title pricing-card-title">{{ object.newsletter_name|title }}</h3>
             <h4 class="card-title pricing-card-title">{{ object.newsletter_body|truncatechars:100 }}</h4>
+            <h4 class="card-title pricing-card-title">{{ object.to_email.contact_email}}</h4>
             <h4 class="card-title pricing-card-title">
                 {% if object.newsletter_settings %}
                     {{ object.newsletter_settings|truncatechars:100 }}

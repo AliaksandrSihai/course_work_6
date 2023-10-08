@@ -15,9 +15,9 @@
                     </form>
                 </div>
                 <div class="card_footer">
-                    <a href="{% url 'users:generate_new_password' %}" class="btn btn-warning"> Сбросить и сгенерировать норвый пароль </a>
-                    {% if user.is_verified %}
-                        <a href="{% url 'users:verify'  %}" class="btn btn-warning"> Верифицировать почтовый адрес </a>
+                    <a href="{% url 'users:new_password' %}" class="btn btn-success"> Сбросить и сгенерировать норвый пароль </a>
+                    {% if  user.is_verified %}
+                        <a href="{% url 'users:verification' %}" class="btn btn-success"> Верифицировать почтовый адрес </a>
                     {% endif %}
                 </div>
             </div>
