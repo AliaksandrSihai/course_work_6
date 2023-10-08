@@ -1,0 +1,36 @@
+{% extends 'service/base.html' %}
+{% block content %}
+{% for  object in object_list %}
+{% load media_path %}
+<style>
+    .card {
+
+        background-image: url('{{ object.image.url }}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: 20px; /* Можете указать необходимый отступ */
+    }
+    .card-body {
+        color: #000000
+    }
+</style>
+<div class="row">
+    <div class="card mb-4 box-shadow">
+        <div class="card_header">
+            <h3 class="card-title pricing-card-title">{{ object.title|title }}</h3>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title pricing-card-title">{{ object.content }}</h4>
+                  <div class="btn-group" role="group" aria-label="Basic outlined example">
+
+                        <a type="button" class="btn btn-secondary"> Просмотров: {{ object.views_count }}</a>
+                        <a type="button" class="btn btn-secondary"> Опубликован: {{ object.publication_date }}</a>
+                  </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endfor %}
+{% endblock content %}

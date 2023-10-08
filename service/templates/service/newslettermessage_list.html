@@ -32,14 +32,8 @@
                     </a>
                 {% endif %}
                 <a class="btn btn-secondary">
-<!--                    {% if object.newsletter_settings.status is None %}-->
-<!--                          <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true"></button>-->
-<!--                    {% elif  object.newsletter_settings.status == 'Завершена' %}-->
-<!--                          <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true">Запустить </button>-->
-<!--                    {% else %}-->
-                         <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true">
-                             {{ object.newsletter_settings.status|default_if_none:" " }}</button>
-<!--                    {% endif %}-->
+                     <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true">
+                         {{ object.newsletter_settings.status }}</button>
                 </a>
             </div>
         </div>

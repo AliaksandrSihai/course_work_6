@@ -60,6 +60,7 @@ def send_newsletter():
                     raise SomeError
         else:
             newsletter.status = 'Завершена'
+            newsletter.save()
 
 
 def newsletter():

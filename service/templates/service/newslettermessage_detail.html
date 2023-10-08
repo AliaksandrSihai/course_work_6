@@ -18,6 +18,7 @@
                  <div  class="btn-group btn-group-sm" role="group" aria-label="Small button group">
                     <a href="{% url 'service:newsletter_update' object.pk %}" type="button" class="btn btn-secondary">Изменить</a>
                     <a href="{% url 'service:newsletter_delete' object.pk %}" type="button" class="btn btn-secondary">Удалить</a>
+                    <a type="button" class="btn btn-secondary">Статус: {{ object.newsletter_settings.status }}</a>
                 </div>
 
         </div>

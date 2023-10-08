@@ -1,8 +1,12 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+import random
+
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
 from django.views import View
+
+from blog.models import Blog
 from client.models import Client
 from service.cron import newsletter
 from service.forms import NewsletterMessageForm, NewsletterSettingsForm, LogsNewsletterForm
@@ -17,14 +21,21 @@ class MainInfoView(View):
     """Отображение главной страницы"""
 
     def get(self, request):
-        return render(request, 'service/main.html')
+        blog = Blog.objects.all()
+        context = {
+            'context': random.sample(list(blog), 3),
+        }
+        return render(request, 'service/main.html', context)
 
 
-class NewsletterCreateView(LoginRequiredMixin, CreateView):
+
+
+class NewsletterCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """Создание новой рассылки"""
     
     model = NewsletterMessage
     form_class = NewsletterMessageForm
+    permission_required = 'service.add_newslettermessage'
     success_url = reverse_lazy('service:newsletter_all')
 
     def form_valid(self, form):
@@ -39,11 +50,12 @@ class NewsletterCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class NewsletterUpdateView(LoginRequiredMixin, UpdateView):
+class NewsletterUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """Изменение существующей рассылки"""
     
     model = NewsletterMessage
     form_class = NewsletterMessageForm
+    permission_required = 'service.change_newslettermessage'
     success_url = reverse_lazy('service:newsletter_all')
 
     def get_context_data(self, **kwargs):
@@ -56,17 +68,19 @@ class NewsletterUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class NewsletterDeleteView(LoginRequiredMixin, DeleteView):
+class NewsletterDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Удаление существующей рассылки"""
     
     model = NewsletterMessage
+    permission_required = 'service.delete_newslettermessage'
     success_url = reverse_lazy('service:newsletter_all')
 
 
-class NewsletterListView(ListView):
+class NewsletterListView(PermissionRequiredMixin, ListView):
     """Просмотр всех созданных рассылок"""
 
     model = NewsletterMessage
+    permission_required = 'service.view_newslettermessage'
     extra_context = {
         'title': "Созданные рассылки",
     }
@@ -75,10 +89,11 @@ class NewsletterListView(ListView):
         return HttpResponseRedirect(reverse('service:newsletter_all'))
 
 
-class NewsletterDetailView(LoginRequiredMixin, DetailView):
+class NewsletterDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     """Просмотр определённой рассылки"""
 
     model = NewsletterMessage
+    permission_required = 'service.view.newslettermessage'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -86,32 +101,36 @@ class NewsletterDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class NewsletterSettingsCreateView(LoginRequiredMixin, CreateView):
+class NewsletterSettingsCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """Создание новой рассылки"""
 
     model = NewsletterSettings
     form_class = NewsletterSettingsForm
+    permission_required = 'service.add.newslettersettings'
     success_url = reverse_lazy('main')
 
 
-class NewsletterSettingsUpdateView(LoginRequiredMixin, UpdateView):
+class NewsletterSettingsUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """Создание новой рассылки"""
 
     model = NewsletterSettings
     form_class = NewsletterSettingsForm
+    permission_required = 'service.change_newslettersettings'
     success_url = reverse_lazy('service:newslettersettings_list')
 
 
-class NewsletterSettingListView(ListView):
+class NewsletterSettingListView(PermissionRequiredMixin, ListView):
     """Просмотр настроек созданных рассылок """
 
     model = NewsletterSettings
+    permission_required = 'service.view_newslettersettings'
 
 
-class NewsletterSettingDetailView(LoginRequiredMixin, DetailView):
+class NewsletterSettingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     """Просмотр конкретной рассылки"""
 
     model = NewsletterSettings
+    permission_required = 'service.view_newslettersettings'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -129,8 +148,9 @@ class NewsletterSettingDetailView(LoginRequiredMixin, DetailView):
         return redirect('service:newslettersettings', pk=self.kwargs['pk'])
 
 
-class NewsletterSettingsDeleteView(LoginRequiredMixin, DeleteView):
+class NewsletterSettingsDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Удаление настройки рассылки"""
 
     model = NewsletterSettings
+    permission_required = 'service.delete_newslettersettings'
     success_url = reverse_lazy('service:newslettersettings_list')

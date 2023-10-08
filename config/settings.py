@@ -129,7 +129,7 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -155,6 +155,5 @@ if CACHE_ENABLED:
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": "redis://127.0.0.1:6379/1",
-            "TIMEOUT": 300 # Ручная регулировка времени жизни кеша в секундах, по умолчанию 300
         }
     }

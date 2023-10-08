@@ -56,22 +56,25 @@
                               </div>
                             </div>
                        </div>
-                    {% for _ in '123' %}
-                        <div class="col-6">
-                            <div class="card mb-4 rounded-3 shadow-sm">
-                              <div class="card-header py-3">
-                                <h4 class="my-0 fw-normal">Блог({{ blog.title }})</h4>
-                              </div>
-                              <div class="card-body">
-                                <ul class="list-unstyled mt-5 mb-100">
-                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                        <a href = "{% url 'blog:blog_create'  %}" type="button" class="btn btn-secondary">Перейти</a>
-                                    </div>
-                                </ul>
-                              </div>
-                            </div>
-                       </div>
-                    {% endfor%}
+
+                        {% for blog in context %}
+                            <div class="col-6">
+                                <div class="card mb-4 rounded-3 shadow-sm">
+                                  <div class="card-header py-3">
+                                    <h4 class="my-0 fw-normal">Блог: {{ blog.title }}</h4>
+                                  </div>
+                                  <div class="card-body">
+                                    <ul class="list-unstyled mt-5 mb-100">
+                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                            <a href = "{% url 'blog:blog_detail' blog.pk  %}" type="button" class="btn btn-secondary">Перейти</a>
+                                            <a href = "{% url 'blog:blog_all'   %}" type="button" class="btn btn-secondary">Другие статьи из блога</a>
+                                        </div>
+                                    </ul>
+                                  </div>
+                                </div>
+                           </div>
+                        {% endfor %}
+
                 </div>
             </div>
 
