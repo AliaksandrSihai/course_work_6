@@ -2,7 +2,7 @@
 from django.views.generic import DetailView, ListView
 
 from blog.models import Blog
-from service.sevices import get_blogs
+from blog.sevices import get_blogs
 
 
 class BlogListView(ListView):

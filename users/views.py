@@ -1,13 +1,11 @@
 import secrets
 import string
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
-
 from config import settings
 from users.forms import UserRegisterForm, ProfileForm
 from users.models import User

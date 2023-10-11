@@ -12,9 +12,10 @@ class StyleFormMixin:
 
 
 class ClientForm(StyleFormMixin, forms.ModelForm):
-    """Форма для модели NewsletterMessage """
+    """Форма для модели Client """
     class Meta:
         model = Client
-        fields = '__all__'
+        exclude = ('from_user',)
+
 
 

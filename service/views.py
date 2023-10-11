@@ -1,20 +1,15 @@
 import random
-
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
 from django.views import View
-
 from blog.models import Blog
 from client.models import Client
 from service.cron import newsletter
-from service.forms import NewsletterMessageForm, NewsletterSettingsForm, LogsNewsletterForm
-from service.models import NewsletterSettings, NewsletterMessage, LogsNewsletter
+from service.forms import NewsletterMessageForm, NewsletterSettingsForm
+from service.models import NewsletterSettings, NewsletterMessage
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
-
-# Create your views here.
 
 
 class MainInfoView(View):
@@ -22,31 +17,34 @@ class MainInfoView(View):
 
     def get(self, request):
         blog = Blog.objects.all()
-        context = {
-            'context': random.sample(list(blog), 3),
-        }
-        return render(request, 'service/main.html', context)
+        if len(blog) > 3:
+            context = {
+                'context': random.sample(list(blog), 3),
+            }
+            return render(request, 'service/main.html', context)
+        else:
+            context = {
+                'context': blog,
+            }
+            return render(request, 'service/main.html', context)
 
 
-
-
-class NewsletterCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class NewsletterCreateView(LoginRequiredMixin,  CreateView):
     """Создание новой рассылки"""
     
     model = NewsletterMessage
     form_class = NewsletterMessageForm
-    permission_required = 'service.add_newslettermessage'
     success_url = reverse_lazy('service:newsletter_all')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        self.object.user = self.request.user
         selected_clients_ids = self.request.POST.getlist('to_email')
-        selected_clients = Client.objects.filter(pk__in=selected_clients_ids)
+        selected_clients = Client.objects.filter(pk__in=selected_clients_ids, from_user=self.request.user)
         self.object.save()
         for client in selected_clients:
             self.object.to_email.add(client)
             newsletter()
-
         return super().form_valid(form)
 
 
@@ -76,38 +74,46 @@ class NewsletterDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteVi
     success_url = reverse_lazy('service:newsletter_all')
 
 
-class NewsletterListView(PermissionRequiredMixin, ListView):
+class NewsletterListView(ListView):
     """Просмотр всех созданных рассылок"""
 
     model = NewsletterMessage
-    permission_required = 'service.view_newslettermessage'
     extra_context = {
         'title': "Созданные рассылки",
     }
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_list'] = NewsletterMessage.objects.filter(user=self.request.user)
+        return context
 
     def post(self, request, *args, **kwargs):
         return HttpResponseRedirect(reverse('service:newsletter_all'))
 
 
-class NewsletterDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class NewsletterDetailView(LoginRequiredMixin, DetailView):
     """Просмотр определённой рассылки"""
 
     model = NewsletterMessage
-    permission_required = 'service.view.newslettermessage'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_list'] = NewsletterMessage.objects.filter(pk=self.object.pk)
+        context['object_list'] = NewsletterMessage.objects.filter(pk=self.object.pk, user=self.request.user)
         return context
 
 
-class NewsletterSettingsCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class NewsletterSettingsCreateView(LoginRequiredMixin, CreateView):
     """Создание новой рассылки"""
 
     model = NewsletterSettings
     form_class = NewsletterSettingsForm
-    permission_required = 'service.add.newslettersettings'
     success_url = reverse_lazy('main')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.user = self.request.user
+        self.object.save()
+        return super().form_valid(form)
 
 
 class NewsletterSettingsUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -119,22 +125,25 @@ class NewsletterSettingsUpdateView(LoginRequiredMixin, PermissionRequiredMixin, 
     success_url = reverse_lazy('service:newslettersettings_list')
 
 
-class NewsletterSettingListView(PermissionRequiredMixin, ListView):
+class NewsletterSettingListView(ListView):
     """Просмотр настроек созданных рассылок """
 
     model = NewsletterSettings
-    permission_required = 'service.view_newslettersettings'
-
-
-class NewsletterSettingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
-    """Просмотр конкретной рассылки"""
-
-    model = NewsletterSettings
-    permission_required = 'service.view_newslettersettings'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_list'] = NewsletterSettings.objects.filter(pk=self.object.pk)
+        context['object_list'] = NewsletterSettings.objects.filter(user=self.request.user)
+        return context
+
+
+class NewsletterSettingDetailView(LoginRequiredMixin, DetailView):
+    """Просмотр конкретной рассылки"""
+
+    model = NewsletterSettings
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_list'] = NewsletterSettings.objects.filter(pk=self.object.pk, user=self.request.user)
         return context
 
     def post(self, request, *args, **kwargs):

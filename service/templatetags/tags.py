@@ -6,8 +6,8 @@ from service.models import NewsletterMessage, NewsletterSettings
 register = template.Library()
 
 @register.filter()
-def count_newsletters(object):
-    models = NewsletterMessage.objects.all()
+def count_newsletters(object,user):
+    models = NewsletterMessage.objects.filter(user=user)
     model_active = []
     for model in models:
         info = model.newsletter_settings
@@ -18,8 +18,8 @@ def count_newsletters(object):
     return f'Активные/Всего: {len(model_active)}/{len(models)}'
 
 @register.filter()
-def client_all(object):
-    model = Client.objects.all()
+def client_all(object,from_user):
+    model = Client.objects.filter(from_user=from_user)
     return f'Всего: {len(model)}'
 
 
@@ -28,6 +28,6 @@ def start_newsletter(object):
     model = NewsletterSettings.object.get(pk=object)
 
 @register.filter()
-def settings_all(object):
-    model = NewsletterSettings.objects.all()
+def settings_all(object, user):
+    model = NewsletterSettings.objects.filter(user=user)
     return f'Всего: {len(model)}'

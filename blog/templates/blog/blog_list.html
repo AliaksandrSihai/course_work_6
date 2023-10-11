@@ -4,10 +4,9 @@
 <div class="col-6">
     <div class="card mb-6 box-shadow">
         <div class="card-body">
-            <h3 class="card-title pricing-card-title">{{ object.title|title }},{{ object.slug_name}}</h3>
-            <h4 class="card-title pricing-card-title">{{ object.description}}</h4>
+            <h3 class="card-title pricing-card-title">{{ object.title|title }}</h3>
+            <h4 class="card-title pricing-card-title">{{ object.description|linebreaksbr }}</h4>
             <h5 class="card-title pricing-card-title">Количество просмотров:{{ object.views_count}}</h5>
-
             <ul class="list-unstyled mt-5 mb-5 text-start m-5">
                 <li></li>
             </ul>

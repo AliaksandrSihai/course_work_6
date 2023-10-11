@@ -9,4 +9,3 @@ class BlogForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Blog
         fields = ('title', 'content', 'image')
-       # exclude = ('views_count', 'publication_date')

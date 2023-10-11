@@ -1,5 +1,4 @@
 from django.urls import path
-
 from service.apps import ServiceConfig
 from service import views
 

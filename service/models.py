@@ -1,8 +1,6 @@
 from django.db import models
-
-import calendar
-
 import client.models
+from config import settings
 
 # Create your models here.
 NULLABLE = {'null': True, 'blank': True}
@@ -20,14 +18,14 @@ class NewsletterSettings(models.Model):
     newsletter_start = models.DateField(verbose_name='начало рассылки')
     newsletter_finish = models.DateField(verbose_name='окончание рассылки')
     frequency = models.CharField(max_length=15, choices=FREQUENCY, verbose_name='периодичность')
-    status = models.CharField(max_length=10, verbose_name='статус рассылки', default='Создана',
+    status = models.CharField(max_length=20, verbose_name='статус рассылки', default='Создана',
                               **NULLABLE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь')
 
     def __str__(self):
         return f'Время рассылки c {self.newsletter_start}  до ' \
                f'{self.newsletter_finish};\n'\
                f'Периодичность - {self.frequency};\n'
-
 
     class Meta:
         verbose_name = 'настройки рассылки'
@@ -42,6 +40,7 @@ class NewsletterMessage(models.Model):
     newsletter_settings = models.ForeignKey(NewsletterSettings, on_delete=models.CASCADE,
                                             verbose_name='настройки рассылки')
     to_email = models.ManyToManyField(to=client.models.Client)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь')
 
     def __str__(self):
         return (f'Тема - {self.newsletter_name};\n '

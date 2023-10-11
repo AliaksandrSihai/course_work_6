@@ -24,7 +24,8 @@ from service.views import MainInfoView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', cache_page(60)(MainInfoView.as_view()), name='main'),
+    #path('', cache_page(10)(MainInfoView.as_view()), name='main'),
+    path('', (MainInfoView.as_view()), name='main'),
     path('newsletter/', include('service.urls', namespace='newsletter')),
     path('client/', include('client.urls', namespace='clients')),
     path('users/', include('users.urls', namespace='users')),
