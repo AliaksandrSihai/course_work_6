@@ -1,0 +1,89 @@
+{% extends 'service/base.html' %}
+{% block content %}
+{% load tags %}
+    <div class="container">
+        <div class="row text-start">
+            <div class="col-6">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">Рассылки(
+                             {% if user.is_authenticated %}
+                                {{ object|count_newsletters:request.user }}
+                            {% else %}
+                                Необходимо войти  для просмотра
+                            {% endif %} )
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-5 mb-100">
+                            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                <a href = "{% url 'service:newsletter_all' %}" type="button" class="btn btn-secondary" >Просмотр рассылок</a>
+                                <a href = "{% url 'service:newslettersettings_list' %}" type="button" class="btn btn-secondary" >Просмотр примеров настройки рассылок</a>
+                                <a href = "{% url 'service:newsletter_create' %}" type="button" class="btn btn-secondary">Создать новую рассылку</a>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">Клиенты(
+                            {% if user.is_authenticated %}
+                                {{ object|client_all:request.user  }}
+                            {% else %}
+                                Необходимо войти для просмотра
+                            {% endif %} )
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-5 mb-100">
+                            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                <a href = "{% url 'client:client_all' %}" type="button" class="btn btn-secondary">Просмотр клиентов</a>
+                                <a href = "{% url 'client:client_create' %}" type="button" class="btn btn-secondary">Создать нового клиента</a>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">Настройки для рассылок(
+                            {% if user.is_authenticated %}
+                                {{ object|settings_all:request.user }}
+                            {% else %}
+                                Необходимо войти для просмотра
+                            {% endif %} )
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-5 mb-100">
+                            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                <a href = "{% url 'service:newslettersettings_list' %}" type="button" class="btn btn-secondary">Просмотр настроек</a>
+                                <a href = "{% url 'service:newslettersettings_create' %}" type="button" class="btn btn-secondary">Создать новую настройку</a>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% for blog in context %}
+                <div class="col-6">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Блог: {{ blog.title }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-5 mb-100">
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                    <a href = "{% url 'blog:blog_detail' blog.pk  %}" type="button" class="btn btn-secondary">Перейти</a>
+                                    <a href = "{% url 'blog:blog_all'   %}" type="button" class="btn btn-secondary">Другие статьи из блога</a>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

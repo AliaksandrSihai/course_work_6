@@ -1,0 +1,102 @@
+{% extends 'service/base.html' %}
+{% block content %}
+<form>
+  <fieldset >
+    <legend> fieldset example</legend>
+    <div class="mb-3">
+      <label for="disabledTextInput" class="form-label"> input</label>
+      <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+    </div>
+    <div class="mb-3">
+      <label for="disabledSelect" class="form-label"> select menu</label>
+      <select id="disabledSelect" class="form-select">
+        <option> select</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" >
+        <label class="form-check-label" for="disabledFieldsetCheck">
+          Can't check this
+        </label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </fieldset>
+</form>
+<!--<body class="bg-primary">-->
+<!--<div id="layoutAuthentication">-->
+<!--    <div id="layoutAuthentication_content">-->
+<!--        <main>-->
+<!--            <div class="container">-->
+<!--                <div class="row justify-content-center">-->
+<!--                    <div class="col-lg-7">-->
+<!--                        <div class="card shadow-lg border-0 rounded-lg mt-5">-->
+<!--                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Создать аккаунт</h3>-->
+<!--                            </div>-->
+<!--                            <div class="card-body">-->
+<!--                                <form>-->
+<!--                                    <div class="form-row">-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <div class="form-group">-->
+<!--                                                <label class="small mb-1" for="inputFirstName">Имя</label>-->
+<!--                                                <input class="form-control py-4" id="inputFirstName" type="text"-->
+<!--                                                       placeholder="Введите имя"/>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <div class="form-group">-->
+<!--                                                <label class="small mb-1" for="inputLastName">Фамилия</label>-->
+<!--                                                <input class="form-control py-4" id="inputLastName" type="text"-->
+<!--                                                       placeholder="Введите фамилию"/>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-row">-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label class="small mb-1" for="inputUsername">Имя пользователя</label>-->
+<!--                                            <input class="form-control py-4" id="inputUsername" type="text"-->
+<!--                                                   aria-describedby="usernameHelp"-->
+<!--                                                   placeholder="Введите имя пользователя"/>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label class="small mb-1" for="inputEmailAddress">Адрес электронной-->
+<!--                                                почты</label>-->
+<!--                                            <input class="form-control py-4" id="inputEmailAddress" type="email"-->
+<!--                                                   aria-describedby="emailHelp"-->
+<!--                                                   placeholder="Введите адрес эл. почты"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-row">-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <div class="form-group">-->
+<!--                                                <label class="small mb-1" for="inputPassword">Пароль</label>-->
+<!--                                                <input class="form-control py-4" id="inputPassword" type="password"-->
+<!--                                                       placeholder="Введите пароль"/>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <div class="form-group">-->
+<!--                                                <label class="small mb-1" for="inputConfirmPassword">Подтверждение-->
+<!--                                                    пароля</label>-->
+<!--                                                <input class="form-control py-4" id="inputConfirmPassword"-->
+<!--                                                       type="password" placeholder="Подтвердите пароль"/>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group mt-4 mb-0">-->
+<!--                                        <input class="btn btn-primary btn-block" type="submit" value="Создать аккаунт">-->
+<!--                                    </div>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                            <div class="card-footer text-center">-->
+<!--                                <div class="small"><a href="login.html">Уже есть аккаунт? Авторизоваться</a></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </main>-->
+<!--    </div>-->
+<!--</div>-->
+{% endblock content %}

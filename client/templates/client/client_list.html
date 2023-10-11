@@ -1,0 +1,25 @@
+{% extends 'service/base.html' %}
+{% block content %}
+{% for  object in object_list %}
+    <div class="col-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-body">
+                <h3 class="card-title pricing-card-title">{{ object|title }}</h3>
+                <ul class="list-unstyled mt-5 mb-5 text-start m-5">
+                    <li></li>
+                </ul>
+                <div class="card-body">
+                        <ul class="list-unstyled mt-5 mb-100">
+                        </ul>
+                </div>
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <a href="{% url 'client:client' object.pk %}" type="button" class="btn btn-secondary">Перейти</a>
+                    <a href="{% url 'client:client_update' object.pk %}" type="button" class="btn btn-secondary">Изменить</a>
+                    <a href="{% url 'client:client_delete' object.pk %}" type="button" class="btn btn-secondary">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}
+{% endblock content %}

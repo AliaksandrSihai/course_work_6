@@ -1,0 +1,17 @@
+{% extends 'service/base.html' %}
+{% block content %}
+    <div class="col-6">
+        <div class="card mb-4 box-shadow">
+            <div class="card-body">
+               <h4 class="card-title pricing-card-title">Начало рассылки: {{ object.newsletter_start }}</h4>
+                <h4 class="card-title pricing-card-title">Конец рассылки: {{ object.newsletter_finish }}</h4>
+                <h4 class="card-title pricing-card-title">Частота: {{ object.frequency }}</h4>
+                <h4 class="card-title pricing-card-title">Статус: {{ object.status }}</h4>
+                <h4 class="card-title pricing-card-title"></h4>
+                <div  class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                    <a href="{% url 'service:newslettersettings_update' object.pk %}" type="button" class="btn btn-secondary">Изменить</a>
+                    <a href="{% url 'service:newslettersettings_delete' object.pk %}" type="button" class="btn btn-secondary">Удалить</a></div>
+                </div>
+        </div>
+    </div>
+{% endblock content %}
