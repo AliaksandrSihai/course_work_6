@@ -48,12 +48,11 @@ class NewsletterCreateView(LoginRequiredMixin,  CreateView):
         return super().form_valid(form)
 
 
-class NewsletterUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class NewsletterUpdateView(LoginRequiredMixin, UpdateView):
     """Изменение существующей рассылки"""
     
     model = NewsletterMessage
     form_class = NewsletterMessageForm
-    permission_required = 'service.change_newslettermessage'
     success_url = reverse_lazy('service:newsletter_all')
 
     def get_context_data(self, **kwargs):
@@ -66,11 +65,10 @@ class NewsletterUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVi
         return super().form_valid(form)
 
 
-class NewsletterDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class NewsletterDeleteView(LoginRequiredMixin, DeleteView):
     """Удаление существующей рассылки"""
     
     model = NewsletterMessage
-    permission_required = 'service.delete_newslettermessage'
     success_url = reverse_lazy('service:newsletter_all')
 
 
@@ -116,12 +114,11 @@ class NewsletterSettingsCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class NewsletterSettingsUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class NewsletterSettingsUpdateView(LoginRequiredMixin, UpdateView):
     """Создание новой рассылки"""
 
     model = NewsletterSettings
     form_class = NewsletterSettingsForm
-    permission_required = 'service.change_newslettersettings'
     success_url = reverse_lazy('service:newslettersettings_list')
 
 
@@ -157,9 +154,8 @@ class NewsletterSettingDetailView(LoginRequiredMixin, DetailView):
         return redirect('service:newslettersettings', pk=self.kwargs['pk'])
 
 
-class NewsletterSettingsDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class NewsletterSettingsDeleteView(LoginRequiredMixin, DeleteView):
     """Удаление настройки рассылки"""
 
     model = NewsletterSettings
-    permission_required = 'service.delete_newslettersettings'
     success_url = reverse_lazy('service:newslettersettings_list')

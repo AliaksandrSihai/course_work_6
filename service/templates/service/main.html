@@ -17,9 +17,11 @@
                     <div class="card-body">
                         <ul class="list-unstyled mt-5 mb-100">
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <a href = "{% url 'service:newsletter_all' %}" type="button" class="btn btn-secondary" >Просмотр рассылок</a>
-                                <a href = "{% url 'service:newslettersettings_list' %}" type="button" class="btn btn-secondary" >Просмотр примеров настройки рассылок</a>
-                                <a href = "{% url 'service:newsletter_create' %}" type="button" class="btn btn-secondary">Создать новую рассылку</a>
+                                {% if user.is_authenticated %}
+                                    <a href = "{% url 'service:newsletter_all' %}" type="button" class="btn btn-secondary" >Просмотр рассылок</a>
+                                    <a href = "{% url 'service:newslettersettings_list' %}" type="button" class="btn btn-secondary" >Просмотр примеров настройки рассылок</a>
+                                    <a href = "{% url 'service:newsletter_create' %}" type="button" class="btn btn-secondary">Создать новую рассылку</a>
+                                {% endif %}
                             </div>
                         </ul>
                     </div>
@@ -39,8 +41,10 @@
                     <div class="card-body">
                         <ul class="list-unstyled mt-5 mb-100">
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <a href = "{% url 'client:client_all' %}" type="button" class="btn btn-secondary">Просмотр клиентов</a>
-                                <a href = "{% url 'client:client_create' %}" type="button" class="btn btn-secondary">Создать нового клиента</a>
+                                {% if user.is_authenticated %}
+                                    <a href = "{% url 'client:client_all' %}" type="button" class="btn btn-secondary">Просмотр клиентов</a>
+                                    <a href = "{% url 'client:client_create' %}" type="button" class="btn btn-secondary">Создать нового клиента</a>
+                                {% endif %}
                             </div>
                         </ul>
                     </div>
@@ -60,8 +64,10 @@
                     <div class="card-body">
                         <ul class="list-unstyled mt-5 mb-100">
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <a href = "{% url 'service:newslettersettings_list' %}" type="button" class="btn btn-secondary">Просмотр настроек</a>
-                                <a href = "{% url 'service:newslettersettings_create' %}" type="button" class="btn btn-secondary">Создать новую настройку</a>
+                                {% if user.is_authenticated %}
+                                    <a href = "{% url 'service:newslettersettings_list' %}" type="button" class="btn btn-secondary">Просмотр настроек</a>
+                                    <a href = "{% url 'service:newslettersettings_create' %}" type="button" class="btn btn-secondary">Создать новую настройку</a>
+                                {% endif %}
                             </div>
                         </ul>
                     </div>

@@ -20,7 +20,7 @@ class NewsletterSettings(models.Model):
     frequency = models.CharField(max_length=15, choices=FREQUENCY, verbose_name='периодичность')
     status = models.CharField(max_length=20, verbose_name='статус рассылки', default='Создана',
                               **NULLABLE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь', **NULLABLE)
 
     def __str__(self):
         return f'Время рассылки c {self.newsletter_start}  до ' \
