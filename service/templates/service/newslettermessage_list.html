@@ -19,6 +19,7 @@
                 </ul>
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                     <a href="{% url 'service:newsletter' object.pk %}" type="button" class="btn btn-secondary">Перейти</a>
+                    <a href="{% url 'service:newsletter_delete' object.pk %}" type="button" class="btn btn-secondary">Удалить</a>
                     <a href="{% url 'service:newsletter_update' object.pk %}" type="button" class="btn btn-secondary">Изменить сообщение</a>
                     {% if object.newsletter_settings %}
                          <a href="{% url 'service:newslettersettings_update' object.newsletter_settings.pk %}" type="button" class="btn btn-secondary">Изменить настройки</a>

@@ -56,5 +56,5 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_list'] = Client.objects.filter(pk=self.object.pk, user=self.request.user)
+        context['object_list'] = Client.objects.filter(pk=self.object.pk, user=self.request.from_user)
         return context
